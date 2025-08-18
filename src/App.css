@@ -1,42 +1,1420 @@
-#root {
-  max-width: 1280px;
+/* 전역 스타일 */
+.app {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  box-sizing: border-box;
+}
+
+.container {
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(20px);
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  max-width: min(600px, 90vw);
+  max-height: 85vh;
+  width: 100%;
   margin: 0 auto;
-  padding: 2rem;
+  overflow-y: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+/* 슬롯 개수 선택 */
+.slot-count-selector {
   text-align: center;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.slot-count-selector .title {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: #333;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
+.slot-count-selector .subtitle {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 2rem;
+}
+
+.count-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.count-option {
+  padding: 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 16px;
+  background: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 60px;
+}
+
+.count-option:hover {
+  border-color: #667eea;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(102, 126, 234, 0.2);
+}
+
+.count-option.active {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+  border-color: transparent;
+}
+
+.start-button {
+  width: 100%;
+  padding: 1.2rem 2rem;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  font-size: 1.2rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.start-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 24px rgba(102, 126, 234, 0.3);
+}
+
+/* 슬롯 데이터 입력 */
+.slot-data-input {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.slot-data-input .title {
+  font-size: 1.75rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: #333;
+}
+
+.progress {
+  margin-bottom: 2rem;
+}
+
+.progress-text {
+  display: block;
+  text-align: center;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #666;
+}
+
+.progress-bar {
+  height: 8px;
+  background: #e0e0e0;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  transition: width 0.3s ease;
+}
+
+.input-card {
+  background: white;
+  border-radius: 20px;
+  padding: 1.5rem;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.05);
+  margin-bottom: 1.5rem;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.card-title {
+  font-size: 1.5rem;
+  margin-bottom: 1.5rem;
+  color: #333;
+  text-align: center;
+}
+
+.input-group {
+  margin-bottom: 1.5rem;
+}
+
+.input-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  color: #555;
+}
+
+.text-input {
+  width: 100%;
+  padding: 1rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+.text-input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.image-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.file-input {
+  display: none;
+}
+
+.upload-button {
+  padding: 1rem 2rem;
+  background: #f8f9fa;
+  border: 2px dashed #ccc;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.upload-button:hover {
+  border-color: #667eea;
+  background: rgba(102, 126, 234, 0.05);
+}
+
+.image-preview {
+  width: 120px;
+  height: 120px;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  background: #f8f9fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.image-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.remove-image-button {
+  padding: 0.5rem 1rem;
+  background: #dc3545;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  margin-top: 0.5rem;
+}
+
+.remove-image-button:hover {
+  background: #c82333;
+}
+
+.slot-status {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.status-complete {
+  color: #28a745;
+}
+
+.status-incomplete {
+  color: #dc3545;
+}
+
+.navigation-buttons {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: space-between;
+  width: 100%;
+  margin-top: 1rem;
+}
+
+.nav-button {
+  flex: 1;
+  padding: 0.875rem 1rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  min-width: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nav-button.primary {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+}
+
+.nav-button.secondary {
+  background: #f8f9fa;
+  color: #666;
+  border: 2px solid #e0e0e0;
+}
+
+.nav-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.nav-button:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.reset-button {
+  width: 100%;
+  padding: 0.8rem;
+  background: transparent;
+  color: #666;
+  border: none;
+  cursor: pointer;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  transition: color 0.3s ease;
+}
+
+.reset-button:hover {
+  color: #dc3545;
+}
+
+/* 슬롯 게임 */
+.slot-game .title {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.slot-machine {
+  position: relative;
+  margin-bottom: 2rem;
+}
+
+.slots-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  min-height: 200px;
+}
+
+.slot-item {
+  width: 120px;
+  height: 120px;
+  background: white;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  overflow: hidden;
+  position: relative;
+}
+
+.slot-item.spinning {
+  animation: spin 0.1s linear infinite;
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg) scale(0.9); }
+  to { transform: rotate(360deg) scale(0.9); }
+}
+
+.slot-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.5rem;
+  width: 100%;
+  height: 100%;
+}
+
+.slot-image {
+  max-width: 80px;
+  max-height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 0.25rem;
+}
+
+.slot-text {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+  word-break: break-word;
+  line-height: 1.2;
+}
+
+.result-indicator {
+  text-align: center;
+}
+
+.arrow {
+  font-size: 2rem;
+  color: #667eea;
+  margin-bottom: 1rem;
+}
+
+.result-display {
+  min-height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.result-content {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 200px;
+  box-shadow: 0 12px 24px rgba(102, 126, 234, 0.3);
+}
+
+.result-image {
+  max-width: 100px;
+  max-height: 100px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.result-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+.spin-button {
+  width: 100%;
+  padding: 1.5rem;
+  background: linear-gradient(45deg, #28a745, #20c997);
+  color: white;
+  border: none;
+  border-radius: 16px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 1rem;
+}
+
+.spin-button:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 30px rgba(40, 167, 69, 0.4);
+}
+
+.spin-button:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.secondary-controls {
+  display: flex;
+  gap: 1rem;
+}
+
+.control-button {
+  flex: 1;
+  padding: 1rem;
+  border: none;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.control-button:not(.secondary) {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+}
+
+.control-button.secondary {
+  background: #f8f9fa;
+  color: #666;
+  border: 2px solid #e0e0e0;
+}
+
+.control-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* 반응형 디자인 */
+@media (max-width: 768px) {
+  .app {
+    padding: 0.5rem;
   }
-  to {
-    transform: rotate(360deg);
+  
+  .container {
+    padding: 1rem;
+    margin: 0.25rem;
+    max-height: 90vh;
+  }
+  
+  .slot-count-selector .title {
+    font-size: 1.75rem;
+  }
+  
+  .slot-data-input .title {
+    font-size: 1.5rem;
+  }
+  
+  .count-options {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0.75rem;
+  }
+  
+  .input-card {
+    padding: 1rem;
+  }
+  
+  .navigation-buttons {
+    gap: 0.5rem;
+  }
+  
+  .nav-button {
+    padding: 0.75rem 0.5rem;
+    font-size: 0.9rem;
+  }
+  
+  .secondary-controls {
+    flex-direction: column;
+  }
+  
+  /* 슬롯머신 반응형 */
+  .machine-body {
+    padding: 1.5rem;
+    margin: 0 0.5rem;
+  }
+  
+  .machine-title {
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+  }
+  
+  .reels-container {
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .reel-window {
+    width: 100px;
+    height: 100px;
+  }
+  
+  .symbol-image {
+    max-width: 50px;
+    max-height: 50px;
+  }
+  
+  .symbol-text {
+    font-size: 0.7rem;
+  }
+  
+  .jackpot-display {
+    padding: 1.5rem;
+    margin: 0 0.5rem;
+  }
+  
+  .jackpot-title {
+    font-size: 1.5rem;
+    letter-spacing: 2px;
+  }
+  
+  .winning-combination {
+    gap: 1rem;
+  }
+  
+  .winner-reel {
+    gap: 0.375rem;
+  }
+
+  .winner-symbol {
+    width: 100px;
+    height: 100px;
+    padding: 0.75rem;
+  }
+  
+  .winner-image {
+    max-width: 60px;
+    max-height: 60px;
+  }
+  
+  .slot-game .spin-button {
+    font-size: 1.2rem;
+    padding: 1.2rem 2rem;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+@media (max-width: 480px) {
+  .container {
+    padding: 0.75rem;
+    margin: 0.125rem;
+  }
+  
+  .slot-count-selector .title {
+    font-size: 1.5rem;
+  }
+  
+  .slot-data-input .title {
+    font-size: 1.25rem;
+  }
+  
+  .input-card {
+    padding: 0.75rem;
+  }
+  
+  .navigation-buttons {
+    gap: 0.375rem;
+  }
+  
+  .nav-button {
+    padding: 0.625rem 0.375rem;
+    font-size: 0.85rem;
+  }
+  
+  /* 슬롯머신 작은 화면 최적화 */
+  .machine-body {
+    padding: 1rem;
+    margin: 0 0.25rem;
+  }
+  
+  .machine-title {
+    font-size: 1rem;
+    letter-spacing: 0.5px;
+  }
+  
+  .machine-lights .light {
+    width: 8px;
+    height: 8px;
+  }
+  
+  .reels-container {
+    gap: 0.25rem;
+  }
+  
+  .reel-window {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .reel-symbol {
+    height: 80px;
+  }
+  
+  .final-symbol {
+    height: 80px;
+    top: 0;
+  }
+  
+  .symbol-image {
+    max-width: 40px;
+    max-height: 40px;
+  }
+  
+  .symbol-text {
+    font-size: 0.6rem;
+  }
+  
+  .reel-label {
+    font-size: 0.8rem;
+  }
+  
+  
+  .jackpot-display {
+    padding: 1rem;
+    margin: 0 0.25rem;
+  }
+  
+  .jackpot-title {
+    font-size: 1.25rem;
+    letter-spacing: 1px;
+  }
+  
+  .jackpot-lights .jackpot-light {
+    width: 6px;
+    height: 6px;
+  }
+  
+  .winning-combination {
+    gap: 0.5rem;
+  }
+  
+  .winner-reel {
+    gap: 0.25rem;
+  }
+  
+  .winner-symbol {
+    width: 80px;
+    height: 80px;
+    padding: 0.5rem;
+  }
+  
+  .winner-image {
+    max-width: 50px;
+    max-height: 50px;
+  }
+  
+  .winner-text {
+    font-size: 0.9rem;
+  }
+  
+  .winner-label {
+    font-size: 0.8rem;
+  }
+  
+  .slot-game .spin-button {
+    font-size: 1rem;
+    padding: 1rem 1.5rem;
+    letter-spacing: 0.5px;
   }
 }
 
-.card {
-  padding: 2em;
+/* 새로운 슬롯 아이템 개수 설정 스타일 */
+.slot-item-count-setup .title {
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #333;
 }
 
-.read-the-docs {
-  color: #888;
+.slot-item-count-setup .subtitle {
+  text-align: center;
+  color: #666;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.slot-configs {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.slot-config {
+  background: white;
+  border-radius: 16px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+}
+
+.slot-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.count-selector {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.count-label {
+  font-weight: 600;
+  color: #555;
+}
+
+.count-buttons {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+  gap: 0.5rem;
+}
+
+.count-btn {
+  padding: 0.75rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  background: white;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-align: center;
+}
+
+.count-btn:hover {
+  border-color: #667eea;
+  transform: translateY(-1px);
+}
+
+.count-btn.active {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+  border-color: transparent;
+}
+
+.custom-count {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
+}
+
+.custom-input {
+  width: 80px;
+  padding: 0.5rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  text-align: center;
+  font-weight: 600;
+}
+
+.custom-input:focus {
+  outline: none;
+  border-color: #667eea;
+}
+
+.custom-label {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.summary {
+  background: #f8f9fa;
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.summary-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.summary-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.summary-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  background: white;
+  border-radius: 8px;
+}
+
+.summary-count {
+  font-weight: 600;
+  color: #667eea;
+}
+
+.total-items {
+  text-align: center;
+  padding: 1rem;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+  border-radius: 12px;
+  margin-top: 0.5rem;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 1rem;
+}
+
+.back-button, .next-button {
+  flex: 1;
+  padding: 1rem;
+  border: none;
+  border-radius: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.back-button {
+  background: #f8f9fa;
+  color: #666;
+  border: 2px solid #e0e0e0;
+}
+
+.next-button {
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+}
+
+.back-button:hover, .next-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* 새로운 게임 UI 스타일 */
+.slot-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 0.5rem;
+}
+
+.slot-column .slot-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #667eea;
+  margin-bottom: 0.75rem;
+}
+
+.slot-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  background: #f8f9fa;
+  padding: 1rem;
+  border-radius: 12px;
+  min-height: 200px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.slot-items.spinning .slot-item {
+  animation: itemSpin 0.1s linear infinite;
+}
+
+@keyframes itemSpin {
+  from { transform: scale(0.9) rotate(-2deg); }
+  to { transform: scale(0.9) rotate(2deg); }
+}
+
+.slot-items .slot-item {
+  background: white;
+  border-radius: 8px;
+  padding: 0.75rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.result-title {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.5rem;
+  color: #333;
+}
+
+.result-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.result-item {
+  background: white;
+  border-radius: 12px;
+  padding: 1rem;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  min-width: 150px;
+}
+
+.result-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #667eea;
+  margin-bottom: 0.5rem;
+}
+
+.result-item .result-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.result-item .result-image {
+  max-width: 80px;
+  max-height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.result-item .result-text {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+/* 슬롯 정보 스타일 */
+.slot-info {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.slot-progress {
+  font-size: 0.9rem;
+  color: #667eea;
+  font-weight: 600;
+}
+
+/* 슬롯머신 스타일 */
+.slot-machine {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2rem;
+}
+
+.machine-body {
+  background: linear-gradient(145deg, #2c3e50, #34495e);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.2);
+  border: 3px solid #f39c12;
+  position: relative;
+  overflow: hidden;
+}
+
+.machine-body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent 48%, rgba(255, 255, 255, 0.05) 50%, transparent 52%);
+  pointer-events: none;
+}
+
+.machine-top {
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.machine-lights {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.light {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #e74c3c;
+  box-shadow: 0 0 10px #e74c3c;
+  transition: all 0.3s ease;
+}
+
+.light.blinking {
+  animation: lightBlink 0.5s infinite alternate;
+}
+
+@keyframes lightBlink {
+  0% { 
+    background: #e74c3c; 
+    box-shadow: 0 0 10px #e74c3c; 
+  }
+  25% { 
+    background: #f39c12; 
+    box-shadow: 0 0 15px #f39c12; 
+  }
+  50% { 
+    background: #2ecc71; 
+    box-shadow: 0 0 15px #2ecc71; 
+  }
+  75% { 
+    background: #3498db; 
+    box-shadow: 0 0 15px #3498db; 
+  }
+  100% { 
+    background: #9b59b6; 
+    box-shadow: 0 0 15px #9b59b6; 
+  }
+}
+
+.machine-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: #f39c12;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  letter-spacing: 2px;
+}
+
+.reels-container {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  position: relative;
+}
+
+.reel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.reel-window {
+  width: 120px;
+  height: 120px;
+  background: #1a252f;
+  border: 4px solid #f39c12;
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 
+    inset 0 0 20px rgba(0, 0, 0, 0.8),
+    0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.reel-strip {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.reel-strip.spinning {
+  animation: reelSpin 0.1s linear infinite;
+}
+
+@keyframes reelSpin {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-100px); }
+}
+
+.reel-symbol {
+  width: 100%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid #34495e;
+}
+
+.symbol-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+  transition: all 0.3s ease;
+}
+
+.symbol-content.winning {
+  animation: winningGlow 1s infinite alternate;
+}
+
+@keyframes winningGlow {
+  0% { 
+    background: rgba(241, 196, 15, 0.2);
+    transform: scale(1);
+  }
+  100% { 
+    background: rgba(241, 196, 15, 0.4);
+    transform: scale(1.05);
+    box-shadow: 0 0 20px rgba(241, 196, 15, 0.6);
+  }
+}
+
+.symbol-image {
+  max-width: 60px;
+  max-height: 60px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-bottom: 0.25rem;
+}
+
+.symbol-text {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #ecf0f1;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+  word-break: break-word;
+  line-height: 1.2;
+}
+
+.final-symbol {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(26, 37, 47, 0.95);
+  border-radius: 8px;
+  z-index: 10;
+}
+
+.reel-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #f39c12;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+
+/* 잭팟 디스플레이 */
+.jackpot-display {
+  background: linear-gradient(145deg, #8e44ad, #9b59b6);
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+  border: 3px solid #f1c40f;
+  animation: jackpotPulse 2s infinite;
+  text-align: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.jackpot-display::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  animation: jackpotShine 3s infinite;
+  pointer-events: none;
+}
+
+@keyframes jackpotPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+@keyframes jackpotShine {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.jackpot-header {
+  margin-bottom: 1.5rem;
+}
+
+.jackpot-lights {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  margin-bottom: 1rem;
+}
+
+.jackpot-light {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #f1c40f;
+  box-shadow: 0 0 8px #f1c40f;
+}
+
+.jackpot-light.blinking {
+  animation: jackpotLightBlink 0.3s infinite alternate;
+}
+
+@keyframes jackpotLightBlink {
+  0% { 
+    background: #f1c40f; 
+    box-shadow: 0 0 8px #f1c40f; 
+  }
+  100% { 
+    background: #fff; 
+    box-shadow: 0 0 15px #fff; 
+  }
+}
+
+.jackpot-title {
+  font-size: 2rem;
+  font-weight: 900;
+  color: #f1c40f;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  letter-spacing: 3px;
+  animation: jackpotTitleGlow 1s infinite alternate;
+}
+
+@keyframes jackpotTitleGlow {
+  0% { text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); }
+  100% { text-shadow: 2px 2px 20px rgba(241, 196, 15, 0.8); }
+}
+
+.winning-combination {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.winner-reel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.winner-symbol {
+  background: rgba(255, 255, 255, 0.1);
+  border: 2px solid #f1c40f;
+  border-radius: 16px;
+  padding: 1rem;
+  backdrop-filter: blur(10px);
+  animation: winnerFloat 2s infinite ease-in-out;
+  text-align: center;
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.winner-reel:nth-child(1) .winner-symbol { animation-delay: 0s; }
+.winner-reel:nth-child(2) .winner-symbol { animation-delay: 0.3s; }
+.winner-reel:nth-child(3) .winner-symbol { animation-delay: 0.6s; }
+.winner-reel:nth-child(4) .winner-symbol { animation-delay: 0.9s; }
+.winner-reel:nth-child(5) .winner-symbol { animation-delay: 1.2s; }
+
+@keyframes winnerFloat {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.winner-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.winner-image {
+  max-width: 80px;
+  max-height: 80px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.winner-text {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+}
+
+.winner-label {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #f39c12;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.7);
+}
+
+/* 게임 컨트롤 버튼 스타일 개선 */
+.slot-game .spin-button {
+  background: linear-gradient(145deg, #e74c3c, #c0392b);
+  border: 3px solid #f1c40f;
+  box-shadow: 
+    0 8px 16px rgba(231, 76, 60, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  font-size: 1.5rem;
+  font-weight: 900;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+  letter-spacing: 1px;
+  padding: 1.5rem 3rem;
+  border-radius: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.slot-game .spin-button:before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.6s;
+}
+
+.slot-game .spin-button:hover:not(:disabled):before {
+  left: 100%;
+}
+
+.slot-game .spin-button:hover:not(:disabled) {
+  transform: translateY(-4px);
+  box-shadow: 
+    0 12px 24px rgba(231, 76, 60, 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.slot-game .spin-button:disabled {
+  background: linear-gradient(145deg, #7f8c8d, #95a5a6);
+  border-color: #bdc3c7;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
