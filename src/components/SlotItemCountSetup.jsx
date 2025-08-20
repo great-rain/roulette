@@ -45,7 +45,7 @@ export default function SlotItemCountSetup() {
               <div className="count-selector">
                 <label className="count-label">아이템 개수:</label>
                 <div className="count-buttons">
-                  {[1, 2, 3, 4, 5, 6].map(count => (
+                  {[1, 2, 3, 4, 5, 6, 8, 10, 15, 20].map(count => (
                     <button
                       key={count}
                       className={`count-btn ${itemCounts[index] === count ? 'active' : ''}`}
@@ -59,10 +59,10 @@ export default function SlotItemCountSetup() {
                   <input
                     type="number"
                     min="1"
-                    max="20"
+                    max="50"
                     value={itemCounts[index]}
                     onChange={(e) => {
-                      const count = Math.max(1, Math.min(20, parseInt(e.target.value) || 1))
+                      const count = Math.max(1, Math.min(50, parseInt(e.target.value) || 1))
                       updateItemCount(index, count)
                     }}
                     className="custom-input"
