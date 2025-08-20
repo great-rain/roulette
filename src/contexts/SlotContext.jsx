@@ -3,9 +3,10 @@ import { createContext, useContext, useReducer, useEffect } from 'react'
 const SlotContext = createContext()
 
 const initialState = {
+  gameTitle: '',
   slotCount: 0,
   slots: [], // { id: 0, itemCount: 3, items: [{ text: '', image: null }, ...] }
-  gameState: 'setup', // 'setup', 'slotItemCount', 'input', 'ready', 'playing'
+  gameState: 'titleInput', // 'titleInput', 'setup', 'slotItemCount', 'input', 'ready', 'playing', 'result'
   currentSlotIndex: 0,
   currentItemIndex: 0,
   result: []
@@ -13,6 +14,13 @@ const initialState = {
 
 function slotReducer(state, action) {
   switch (action.type) {
+    case 'SET_GAME_TITLE':
+      return {
+        ...state,
+        gameTitle: action.payload,
+        gameState: 'setup'
+      }
+    
     case 'SET_SLOT_COUNT':
       return {
         ...state,
@@ -103,16 +111,39 @@ export function SlotProvider({ children }) {
   useEffect(() => {
     const savedData = localStorage.getItem('slotGameData')
     if (savedData) {
-      const data = JSON.parse(savedData)
-      if (data.slotCount > 0) {
-        dispatch({ type: 'SET_SLOT_COUNT', payload: data.slotCount })
-        data.slots.forEach((slot, index) => {
-          dispatch({ 
-            type: 'UPDATE_SLOT', 
-            payload: { id: index, data: slot }
+      try {
+        const data = JSON.parse(savedData)
+        // 게임 제목이 있고 slotCount가 있으면 저장된 데이터 복원
+        if (data.gameTitle && data.slotCount > 0) {
+          dispatch({ type: 'SET_GAME_TITLE', payload: data.gameTitle })
+          dispatch({ type: 'SET_SLOT_COUNT', payload: data.slotCount })
+          
+          // 슬롯 데이터 복원
+          data.slots.forEach((slot, index) => {
+            dispatch({ 
+              type: 'SET_SLOT_ITEM_COUNT',
+              payload: { slotId: index, itemCount: slot.itemCount }
+            })
+            slot.items.forEach((item, itemIndex) => {
+              dispatch({
+                type: 'UPDATE_SLOT_ITEM',
+                payload: {
+                  slotId: index,
+                  itemId: itemIndex,
+                  data: item
+                }
+              })
+            })
           })
-        })
-        dispatch({ type: 'SET_GAME_STATE', payload: data.gameState || 'ready' })
+          
+          // 게임 상태 복원 (result는 제외하고)
+          const gameState = data.gameState === 'result' ? 'ready' : (data.gameState || 'ready')
+          dispatch({ type: 'SET_GAME_STATE', payload: gameState })
+        }
+      } catch (error) {
+        console.error('저장된 데이터 로드 실패:', error)
+        // 오류 시 로컬스토리지 데이터 삭제
+        localStorage.removeItem('slotGameData')
       }
     }
   }, [])

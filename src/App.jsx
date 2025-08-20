@@ -1,8 +1,10 @@
 import { SlotProvider, useSlot } from './contexts/SlotContext'
+import TitleInput from './components/TitleInput'
 import SlotCountSelector from './components/SlotCountSelector'
 import SlotItemCountSetup from './components/SlotItemCountSetup'
 import SlotDataInput from './components/SlotDataInput'
 import SlotGame from './components/SlotGame'
+import ResultScreen from './components/ResultScreen'
 import './App.css'
 
 function AppContent() {
@@ -10,6 +12,8 @@ function AppContent() {
 
   const renderCurrentStep = () => {
     switch (state.gameState) {
+      case 'titleInput':
+        return <TitleInput />
       case 'setup':
         return <SlotCountSelector />
       case 'slotItemCount':
@@ -19,8 +23,10 @@ function AppContent() {
       case 'ready':
       case 'playing':
         return <SlotGame />
+      case 'result':
+        return <ResultScreen />
       default:
-        return <SlotCountSelector />
+        return <TitleInput />
     }
   }
 

@@ -42,7 +42,7 @@ export default function SlotGame() {
           return newResults;
         });
 
-        // 마지막 슬롯이 멈추면 결과 저장
+        // 마지막 슬롯이 멈추면 결과 저장 및 결과 화면으로 이동
         if (slotIndex === results.length - 1) {
           setTimeout(() => {
             dispatch({
@@ -50,6 +50,10 @@ export default function SlotGame() {
               payload: results.map((r) => r.item),
             });
             setIsSpinning(false);
+            // 3초 후 결과 화면으로 이동
+            setTimeout(() => {
+              dispatch({ type: "SET_GAME_STATE", payload: "result" });
+            }, 3000);
           }, 500);
         }
       }, stopDelay);
@@ -68,10 +72,9 @@ export default function SlotGame() {
   return (
     <div className="slot-game">
       <div className="container">
-        <h2 className="title">🎰 슬롯 머신</h2>
-
         <div className="slot-machine">
           <div className="machine-body">
+            <h2 className="title">{state.gameTitle || "슬롯 머신"}</h2>
             <div className="machine-top">
               <div className="machine-lights">
                 {[...Array(10)].map((_, i) => (
@@ -81,7 +84,6 @@ export default function SlotGame() {
                   ></div>
                 ))}
               </div>
-              <div className="machine-title">🎰 SLOT MACHINE 🎰</div>
             </div>
 
             <div className="reels-container">
@@ -150,43 +152,7 @@ export default function SlotGame() {
                 </div>
               ))}
             </div>
-
           </div>
-
-          {state.result.length > 0 && (
-            <div className="jackpot-display">
-              <div className="jackpot-header">
-                <div className="jackpot-lights">
-                  {[...Array(20)].map((_, i) => (
-                    <div key={i} className="jackpot-light blinking"></div>
-                  ))}
-                </div>
-                <h2 className="jackpot-title">🎉 JACKPOT! 🎉</h2>
-              </div>
-
-              <div className="winning-combination">
-                {state.result.map((resultItem, index) => (
-                  <div key={index} className="winner-reel">
-                    <div className="winner-symbol">
-                      <div className="winner-content">
-                        {resultItem.image && (
-                          <img
-                            src={resultItem.image}
-                            alt={resultItem.text || "Winner"}
-                            className="winner-image"
-                          />
-                        )}
-                        {resultItem.text && (
-                          <span className="winner-text">{resultItem.text}</span>
-                        )}
-                      </div>
-                    </div>
-                    <div className="winner-label">slot {index + 1}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
         </div>
 
         <div className="game-controls">

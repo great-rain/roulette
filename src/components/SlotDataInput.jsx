@@ -140,7 +140,7 @@ export default function SlotDataInput() {
   return (
     <div className="slot-data-input">
       <div className="container">
-        <h2 className="title">아이템 데이터 입력</h2>
+        <h2 className="title">{state.gameTitle || '슬롯 게임'} - 아이템 데이터 입력</h2>
         <div className="progress">
           <span className="progress-text">
             {completedItems + 1} / {totalItems}

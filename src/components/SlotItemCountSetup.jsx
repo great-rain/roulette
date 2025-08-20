@@ -35,7 +35,7 @@ export default function SlotItemCountSetup() {
   return (
     <div className="slot-item-count-setup">
       <div className="container">
-        <h2 className="title">각 슬롯별 아이템 개수 설정</h2>
+        <h2 className="title">{state.gameTitle || '슬롯 게임'} - 아이템 개수 설정</h2>
         <p className="subtitle">각 슬롯에 들어갈 아이템의 개수를 선택하세요</p>
         
         <div className="slot-configs">
